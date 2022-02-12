@@ -30,3 +30,18 @@ II. Steps to productionize the code :
 1. export imdbPropertiesFile=/users/manoj/imdb/imdb.properties
 2. place the jar file ImdbMainApp.jar in /users/manoj/imdb/jars/
 3. spark-submit --master yarn --name /users/manoj/imdb/jars/ImdbMainApp.jar --class com.coding.imdb.ImdbMainApp --driver-memory 20g --executor-memory 20g --executor-cores 4 --num-executors 10
+
+
+III. Build commands:
+cd /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/
+mvn clean install
+cp /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/target/ImdbMainApp.jar /home/mp29022/imdb/jars/
+chmod 755 /home/mp29022/imdb/jars/ImdbMainApp.jar
+cp /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/src/main/resources/imdb.properties  /home/mp29022/imdb/properties/
+ksh -x /home/mp29022/imdb/bin/imdbAnalysis.ksh
+
+
+IV. Area of code improvements:
+1.  Facing some performance issue in the join while fetching most credited person.  Need to look at it.
+2.  Unable to write the output df to the file as there is some issue in hadoop common libraries, could not fix it in the given window
+3.  
