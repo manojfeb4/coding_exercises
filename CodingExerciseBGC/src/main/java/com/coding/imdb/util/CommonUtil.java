@@ -75,7 +75,7 @@ public class CommonUtil {
 
     public static void writeCsvFile(Dataset<Row> df, String outputFileName) {
 
-        df.write().option("header", "true").option("delimiter", ",").mode(SaveMode.Overwrite).csv("src/test/resources/outputFiles/output.csv")
+        df.repartition(10).write().option("header", "true").option("delimiter", ",").mode(SaveMode.Overwrite).csv(outputFileName)
         ;
         log.info("{} file is created ", outputFileName);
     }
