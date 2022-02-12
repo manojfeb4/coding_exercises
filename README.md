@@ -1,6 +1,6 @@
 # coding_exercises
 
-1. This program calculates two metrics from imdb repository
+I. This program calculates two metrics from imdb repository
   a. Retrieval of top 20 movies based on Ranking logic
   b. Retreival of most credited persons of those 20 movies
   
@@ -23,3 +23,10 @@ b. Most credited persons of 20 movies
 11. create the dataframe from name.basics.tsv.gz
 12. join (10) and (11) on nconst to fetch the most credited person (primaryName)
 13. display the output with originalTitle and primaryTitle 
+
+
+II. Steps to productionize the code :
+
+1. export imdbPropertiesFile=/users/manoj/imdb/imdb.properties
+2. place the jar file ImdbMainApp.jar in /users/manoj/imdb/jars/
+3. spark-submit --master yarn --name /users/manoj/imdb/jars/ImdbMainApp.jar --class com.coding.imdb.ImdbMainApp --driver-memory 20g --executor-memory 20g --executor-cores 4 --num-executors 10
