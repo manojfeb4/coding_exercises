@@ -40,7 +40,7 @@ public class TestImdbAnalysis {
         assertEquals(top20MoviesDf.count() >= 0, true);
         var mostCreditedDf = new ImdbAnalysis().getMostCreditedPersons(spark, top20MoviesDf);
         assertEquals(mostCreditedDf.count() >= 0, true);
-        //assertEquals(Files.exists(Path.of("src/test/resources/outputFiles/top20_movies.csv")), "1");
-        //assertEquals(Files.exists(Path.of("src/test/resources/outputFiles/most_credited_persons.csv")), "1");
+        //assertEquals(Files.exists(Path.of("src/test/resources/outputFiles/top20_movies.csv")), true);
+        //assertEquals(Files.exists(Path.of("src/test/resources/outputFiles/most_credited_persons.csv")), true);
     }
 }
