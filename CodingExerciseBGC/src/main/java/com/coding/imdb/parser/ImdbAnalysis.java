@@ -72,23 +72,28 @@ public class ImdbAnalysis {
     public Dataset<Row> getMostCreditedPersons(SparkSession spark, Dataset<Row> topMoviesDf) {
 
         //var mostCreditedDf = spark.sqlContext().sql("select t1.tconst, t2.* from titlePrincipalsTbl t1 inner join topMoviesTbl t2 on t1.tconst = t2.tconst");
-        topMoviesDf = topMoviesDf.repartition(5);
-        var mostCreditedDf = titlePrincipalsDf.as("t1").join(functions.broadcast(topMoviesDf.as("t2")),
-                        col("t1.tconst").equalTo(col("t2.tconst")), "inner")
-                .select(col("t2.*"), col("t1.nconst"));
+        topMoviesDf = topMoviesDf.repartition(col("tconst"));
+        titlePrincipalsDf = titlePrincipalsDf.repartition(col("tconst"));
 
-        System.out.println("count: " + mostCreditedDf.count());
+
+        var mostCreditedDf = titlePrincipalsDf.as("t1").join(topMoviesDf.as("t2"),
+                        col("t1.tconst").equalTo(col("t2.tconst")), "inner")
+                .select(col("t2.*"), col("t1.nconst")).repartition(col("tconst"));
+
+       log.info("most credited df count: " + mostCreditedDf.count());
         mostCreditedDf.printSchema();
-        mostCreditedDf = titleBasicsDf.as("t1").join(mostCreditedDf.as("t2"),
+        titleBasicsDf = titleBasicsDf.repartition(col("tconst"));
+        mostCreditedDf = titleBasicsDf.as("t1").join(functions.broadcast(mostCreditedDf.as("t2")),
                         col("t1.tconst")
                                 .equalTo(col("t2.tconst")), "inner")
-                .select(col("t2.*"),
-                        col("t1.primaryTitle"),
-                        col("t1.originalTitle"));
+                .select(col("t2.tconst"), col("t2.nconst"), col("t2.primaryTitle"), col("t1.originalTitle"))
+                .repartition(col("nconst"));
         mostCreditedDf.printSchema();
+
+        nameBasicsDf = nameBasicsDf.repartition(col("nconst"));
         mostCreditedDf = nameBasicsDf.as("t1").join(mostCreditedDf.as("t2"),
                         col("t1.nconst").equalTo(col("t2.nconst")), "inner")
-                .select(col("t2.*"), col("t1.primaryName"));
+                .select(col("t2.primaryTitle"), col("t2.originalTitle"), col("t1.primaryName"));
         mostCreditedDf.show(5);
         mostCreditedDf.printSchema();
         return mostCreditedDf;
