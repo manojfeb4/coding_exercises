@@ -29,7 +29,18 @@ II. Steps to productionize the code :
 
 1. export imdbPropertiesFile=/users/manoj/imdb/imdb.properties
 2. place the jar file ImdbMainApp.jar in /users/manoj/imdb/jars/
-3. spark-submit --master yarn --name /users/manoj/imdb/jars/ImdbMainApp.jar --class com.coding.imdb.ImdbMainApp --driver-memory 20g --executor-memory 20g --executor-cores 4 --num-executors 10
+3. set the spark configuration parameters in $SPARK_HOME/conf/spark-defaults-conf as below
+spark.master yarn
+spark.driver.memory 512m
+spark.yarn.am.memory 512m
+spark.executor.memory 512m
+spark.eventLog.enabled true
+spark.eventLog.dir hdfs://namenode:9000/spark-logs
+spark.history.provider org.apache.spark.deploy.history.FsHistoryProvider
+spark.history.fs.logDirectory hdfs://namenode:9000/spark-logs
+spark.history.fs.update.interval 10s
+spark.history.ui.port 18080
+4. spark-submit --master yarn --class com.coding.imdb.ImdbMainApp /users/manoj/imdb/jars/ImdbMainApp.jar 
 
 
 III. Build commands:
