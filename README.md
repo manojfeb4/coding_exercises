@@ -33,15 +33,15 @@ II. Steps to productionize the code :
 
 
 III. Build commands:
-cd /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/
-mvn clean install
-cp /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/target/ImdbMainApp.jar /home/mp29022/imdb/jars/
-chmod 755 /home/mp29022/imdb/jars/ImdbMainApp.jar
-cp /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/src/main/resources/imdb.properties  /home/mp29022/imdb/properties/
-ksh -x /home/mp29022/imdb/bin/imdbAnalysis.ksh
+1. cd /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/
+2. mvn clean install
+3. cp /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/target/ImdbMainApp.jar /home/mp29022/imdb/jars/
+4. chmod 755 /home/mp29022/imdb/jars/ImdbMainApp.jar
+5. cp /mnt/c/users/manoj/IdeaProjects/demo/CodingExerciseBGC/src/main/resources/imdb.properties  /home/mp29022/imdb/properties/
+6. ksh -x /home/mp29022/imdb/bin/imdbAnalysis.ksh
 
 
 IV. Area of code improvements:
 1.  Facing some performance issue in the join while fetching most credited person.  Need to look at it.
 2.  Unable to write the output df to the file as there is some issue in hadoop common libraries, could not fix it in the given window
-3.  
+  
