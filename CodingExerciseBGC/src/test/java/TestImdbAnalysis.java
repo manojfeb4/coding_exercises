@@ -37,9 +37,9 @@ public class TestImdbAnalysis {
         var spark = CommonUtil.createSparkSessionLocal();
         var prop = CommonUtil.getProperties("src/test/resources/imdb.properties");
         var top20MoviesDf = new ImdbAnalysis().getTop20Movies(spark, prop);
-        assertEquals(top20MoviesDf.count() >= 0, "1");
+        assertEquals(top20MoviesDf.count() >= 0, true);
         var mostCreditedDf = new ImdbAnalysis().getMostCreditedPersons(spark, top20MoviesDf);
-        assertEquals(mostCreditedDf.count() >= 0, "1");
+        assertEquals(mostCreditedDf.count() >= 0, true);
         //assertEquals(Files.exists(Path.of("src/test/resources/outputFiles/top20_movies.csv")), "1");
         //assertEquals(Files.exists(Path.of("src/test/resources/outputFiles/most_credited_persons.csv")), "1");
     }
